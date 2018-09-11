@@ -21,12 +21,21 @@ const width = Dimensions.get('screen').width;
 type Props = {};
 export default class App extends Component<Props> {
   render() {
+    const fotos = [
+      {id:1, usuario: 'trivialidades'},
+      {id:2, usuario: 'trivialidades'},
+      {id:3, usuario: 'trivialidades'}
+    ]
     return (
-        <View>
-          <Text>Ramón</Text>
-          <Image source={require('./resources/img/ramon.jpg')} 
-            style={{width: width, height: width}}
-          />
+        <View style={{marginTop: 20}}>
+          {fotos.map(foto =>
+            <View key={foto.id}>
+            <Text>{foto.usuario}</Text>
+            <Image source={require('./resources/img/ramon.jpg')} 
+              style={{width: width, height: width}}
+            />
+            </View>
+          )}
         </View>
     );
   }
