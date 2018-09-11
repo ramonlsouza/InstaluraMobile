@@ -11,9 +11,11 @@ import {
   Platform, 
   StyleSheet, 
   Text, 
-  View, 
+  View,
+  ScrollView,
   Image, 
-  Dimensions
+  Dimensions,
+  FlatList
 } from 'react-native';
 
 const width = Dimensions.get('screen').width;
@@ -27,16 +29,18 @@ export default class App extends Component<Props> {
       {id:3, usuario: 'trivialidades'}
     ]
     return (
-        <View style={{marginTop: 20}}>
-          {fotos.map(foto =>
-            <View key={foto.id}>
-            <Text>{foto.usuario}</Text>
-            <Image source={require('./resources/img/ramon.jpg')} 
-              style={{width: width, height: width}}
-            />
-            </View>
-          )}
-        </View>
+      <FlatList style={{ marginTop: 20 }}
+        keyExtractor={item => item.id.toString()}
+        data={fotos}
+        renderItem={ ({item}) =>
+          <View>
+          <Text>{item.usuario}</Text>
+          <Image source={require('./resources/img/ramon.jpg')} 
+            style={{width: width, height: width}}
+          />
+          </View>
+        }
+      />
     );
   }
 }
