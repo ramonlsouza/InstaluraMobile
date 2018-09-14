@@ -34,10 +34,13 @@ export default class App extends Component<Props> {
         data={fotos}
         renderItem={ ({item}) =>
           <View>
-          <Text>{item.usuario}</Text>
-          <Image source={require('./resources/img/ramon.jpg')} 
-            style={{width: width, height: width}}
-          />
+            <View style={{margin: 10,flexDirection: 'row', alignItems: 'center'}}>
+              <Image source={require('./resources/img/ramon.jpg')} 
+                style={{marginRight: 10, borderRadius: 20, width: 40, height: 40}}/>
+              <Text>{item.usuario}</Text>
+            </View>
+            <Image source={require('./resources/img/ramon.jpg')} 
+              style={{width: width, height: width}}/>
           </View>
         }
       />
