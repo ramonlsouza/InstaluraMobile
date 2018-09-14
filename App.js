@@ -24,16 +24,28 @@ const width = Dimensions.get('screen').width;
 
 type Props = {};
 export default class App extends Component<Props> {
+  //faz isso no inicio
+  constructor() {
+    super();
+
+    this.state = {
+      fotos: []
+    }
+  }
+
+  //se constructor deu certo, atualiza dados aqui
+  componentDidMount() {
+    //busca fotos na api remota, faz parse do json e atualiza estado da variavel fotos
+    fetch('https://instalura-api.herokuapp.com/api/public/fotos/rafael')
+      .then(resposta => resposta.json())
+      .then(json => this.setState({fotos: json}))
+  }
+
   render() {
-    const fotos = [
-      {id:1, usuario: 'trivialidades'},
-      {id:2, usuario: 'trivialidades'},
-      {id:3, usuario: 'trivialidades'}
-    ]
     return (
       <FlatList style={styles.container}
         keyExtractor={item => item.id.toString()}
-        data={fotos}
+        data={this.state.fotos}
         renderItem={ ({item}) =>
           <Post foto={item}/>
         }
