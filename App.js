@@ -18,6 +18,8 @@ import {
   FlatList
 } from 'react-native';
 
+import Post from './src/components/Post';
+
 const width = Dimensions.get('screen').width;
 
 type Props = {};
@@ -33,15 +35,7 @@ export default class App extends Component<Props> {
         keyExtractor={item => item.id.toString()}
         data={fotos}
         renderItem={ ({item}) =>
-          <View>
-            <View style={styles.cabecalho} >
-              <Image source={require('./resources/img/ramon.jpg')} 
-                style={styles.fotoDePerfil}/>
-              <Text>{item.usuario}</Text>
-            </View>
-            <Image source={require('./resources/img/ramon.jpg')} 
-              style={styles.foto}/>
-          </View>
+          <Post foto={item}/>
         }
       />
     );
@@ -51,20 +45,5 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     marginTop: 20
-  },
-  cabecalho: {
-    margin: 10,
-    flexDirection: 'row', 
-    alignItems: 'center'
-  },
-  fotoDePerfil: {
-    marginRight: 10, 
-    borderRadius: 20, 
-    width: 40, 
-    height: 40
-  },
-  foto: {
-    width: width, 
-    height: width
   },
 });
