@@ -22,15 +22,26 @@ const width = Dimensions.get('screen').width;
 
 type Props = {};
 export default class Post extends Component<Props> {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+        foto: this.props.foto
+    }
+  }
+
   render() {
+    const { foto } = this.state;
+    
     return (
         <View>
         <View style={styles.cabecalho} >
-            <Image source={{uri: this.props.foto.urlPerfil}} 
+            <Image source={{uri: foto.urlPerfil}} 
             style={styles.fotoDePerfil}/>
-            <Text>{this.props.foto.loginUsuario}</Text>
+            <Text>{foto.loginUsuario}</Text>
         </View>
-        <Image source={{uri: this.props.foto.urlFoto}} 
+        <Image source={{uri: foto.urlFoto}} 
             style={styles.foto}/>
         </View>
     );
