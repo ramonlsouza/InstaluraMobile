@@ -29,7 +29,8 @@ export default class Post extends Component<Props> {
     super(props);
 
     this.state = {
-        foto: this.props.foto
+        foto: this.props.foto,
+        valorComentario: ''
     }
   }
 
@@ -89,6 +90,31 @@ export default class Post extends Component<Props> {
 
   }
 
+  adicionaComentario(){
+    if(this.state.valorComentario === '')
+      return;
+
+    //cria uma copia local com base em objeto existente
+    const novaLista = [...this.state.foto.comentarios, {
+      id: this.state.valorComentario,
+      login: 'trivialidades',
+      texto: this.state.valorComentario
+    }];
+
+    const fotoAtualizada = {
+      ...this.state.foto,
+      comentarios: novaLista
+    }
+
+    this.setState({foto: fotoAtualizada, valorComentario: ''})
+
+    this.inputComentario.clear();
+
+    //bug com clear nessa versao do react native, hacking-fix
+    if (Platform.OS === 'ios') this.inputComentario.setNativeProps({ text: ' ' });
+    setTimeout(() => { this.inputComentario.setNativeProps({ text: '' }) }, 5)
+  }
+
   render() {
     const { foto } = this.state;
     
@@ -120,8 +146,17 @@ export default class Post extends Component<Props> {
                 )}
 
                 <View style={styles.novoComentario}>
-                  <TextInput style={styles.input} placeholder="Adicione um comentário..."/>
-                  <Image style={styles.icone} source={require('../../resources/img/send.png')}/>
+                  <TextInput style={styles.input} 
+                    placeholder="Adicione um comentário..."
+                    ref={input => this.inputComentario = input}
+                    onChangeText={texto => this.setState({valorComentario: texto})}
+                  />
+
+                  <TouchableOpacity onPress={this.adicionaComentario.bind(this)}>
+                    <Image style={styles.icone} 
+                      source={require('../../resources/img/send.png')}
+                    />
+                  </TouchableOpacity>
                 </View>
             </View>
         </View>
