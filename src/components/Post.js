@@ -64,6 +64,10 @@ export default class Post extends Component<Props> {
                         source={this.carregaIcone(foto.likeada)} 
                     />
                 </TouchableOpacity>
+                {foto.likers.length > 0 ?
+                <Text style={styles.likes}>{foto.likers.length} {foto.likes.length > 1 ? 'curtidas' : 'curtida'}</Text>
+                : null
+                }
             </View>
         </View>
     );
@@ -88,9 +92,13 @@ const styles = StyleSheet.create({
   },
   botaoDeLike: {
     width: 40,
-    height: 40
+    height: 40,
+    marginBottom: 10
   },
   rodape: {
     margin: 10
-  }
+  },
+  likes: {
+    fontWeight: 'bold'
+  },
 });
