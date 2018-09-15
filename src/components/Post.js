@@ -38,10 +38,27 @@ export default class Post extends Component<Props> {
   }
 
   like() {
+    const { foto } = this.state;
+
+    let novaLista = []
+
+    if(!foto.likeada){
+      novaLista = [
+        ...foto.likers,
+        {login: 'trivialidades'}
+      ]
+    }else{
+      novaLista = foto.likers.filter( liker => {
+        return liker.login !== 'trivialidades'
+      });
+    }
+
+
     const fotoAtualizada = {
         //TODO: pesquisar sobre isso depois (spread syntax)
         ...this.state.foto,
-        likeada: !this.state.foto.likeada
+        likeada: !this.state.foto.likeada,
+        likers: novaLista
     }
     this.setState({foto: fotoAtualizada})
   }
@@ -60,7 +77,7 @@ export default class Post extends Component<Props> {
   exibeLegenda(foto){
     if(foto.comentario === '')
       return;
-      
+
     return (
       <View style={styles.comentario}>
       <Text style={styles.tituloComentario}>{foto.loginUsuario}</Text>
