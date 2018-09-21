@@ -150,6 +150,7 @@ export default class Post extends Component<Props> {
                     placeholder="Adicione um comentário..."
                     ref={input => this.inputComentario = input}
                     onChangeText={texto => this.setState({valorComentario: texto})}
+                    underlineColorAndroid="transparent"
                   />
 
                   <TouchableOpacity onPress={this.adicionaComentario.bind(this)}>
