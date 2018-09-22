@@ -21,6 +21,7 @@ import {
 } from 'react-native';
 
 import InputComentario from './InputComentario';
+import Likes from './Likes';
 
 const width = Dimensions.get('screen').width;
 
@@ -32,11 +33,6 @@ export default class Post extends Component{
     this.state = {
         foto: this.props.foto
     }
-  }
-
-  carregaIcone(likeada) {
-    return likeada ? require('../../resources/img/s2-checked.png') : 
-    require('../../resources/img/s2.png')
   }
 
   like() {
@@ -63,17 +59,6 @@ export default class Post extends Component{
         likers: novaLista
     }
     this.setState({foto: fotoAtualizada})
-  }
-
-  exibeLikes(likers){
-    if(likers <= 0)
-      return;
-
-    return (
-        <Text style={styles.likes}>
-          {likers.length} {likers.length > 1 ? 'curtidas' : 'curtida'}
-        </Text>
-    );
   }
 
   exibeLegenda(foto){
@@ -123,14 +108,7 @@ export default class Post extends Component{
             <Image source={{uri: foto.urlFoto}} 
                 style={styles.foto}/>
             <View style={styles.rodape} >
-                <TouchableOpacity onPress={this.like.bind(this)}>
-                    <Image style={styles.botaoDeLike} 
-                        source={this.carregaIcone(foto.likeada)} 
-                    />
-                </TouchableOpacity>
-
-                {this.exibeLikes(foto.likers)}
-
+                <Likes foto={foto} likeCallback={this.like.bind(this)}/>
                 {this.exibeLegenda(foto)}
 
                 {foto.comentarios.map(comentario => 
@@ -163,16 +141,8 @@ const styles = StyleSheet.create({
     width: width, 
     height: width
   },
-  botaoDeLike: {
-    width: 40,
-    height: 40,
-    marginBottom: 10
-  },
   rodape: {
     margin: 10
-  },
-  likes: {
-    fontWeight: 'bold'
   },
   comentario: {
     flexDirection: 'row'    
