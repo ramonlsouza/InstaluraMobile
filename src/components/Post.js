@@ -8,16 +8,11 @@
 
 import React, {Component} from 'react';
 import {
-  Platform, 
   StyleSheet, 
   Text, 
   View,
-  ScrollView,
   Image, 
   Dimensions,
-  FlatList,
-  TouchableOpacity,
-  TextInput
 } from 'react-native';
 
 import InputComentario from './InputComentario';

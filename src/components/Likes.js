@@ -1,15 +1,10 @@
 import React, {Component} from 'react';
 import {
-  Platform, 
   StyleSheet, 
   Text, 
   View,
-  ScrollView,
   Image, 
-  Dimensions,
-  FlatList,
   TouchableOpacity,
-  TextInput
 } from 'react-native';
 
 export default class Likes extends Component{
