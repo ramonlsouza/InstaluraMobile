@@ -22,8 +22,7 @@ import Post from './src/components/Post';
 
 const width = Dimensions.get('screen').width;
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component{
   //faz isso no inicio
   constructor() {
     super();

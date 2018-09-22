@@ -20,17 +20,17 @@ import {
   TextInput
 } from 'react-native';
 
+import InputComentario from './InputComentario';
+
 const width = Dimensions.get('screen').width;
 
-type Props = {};
-export default class Post extends Component<Props> {
+export default class Post extends Component{
 
   constructor(props) {
     super(props);
 
     this.state = {
-        foto: this.props.foto,
-        valorComentario: ''
+        foto: this.props.foto
     }
   }
 
@@ -90,15 +90,15 @@ export default class Post extends Component<Props> {
 
   }
 
-  adicionaComentario(){
-    if(this.state.valorComentario === '')
+  adicionaComentario(valorComentario, inputComentario){
+    if(valorComentario === '')
       return;
 
     //cria uma copia local com base em objeto existente
     const novaLista = [...this.state.foto.comentarios, {
-      id: this.state.valorComentario,
+      id: valorComentario,
       login: 'trivialidades',
-      texto: this.state.valorComentario
+      texto: valorComentario
     }];
 
     const fotoAtualizada = {
@@ -106,13 +106,8 @@ export default class Post extends Component<Props> {
       comentarios: novaLista
     }
 
-    this.setState({foto: fotoAtualizada, valorComentario: ''})
+    this.setState({foto: fotoAtualizada})
 
-    this.inputComentario.clear();
-
-    //bug com clear nessa versao do react native, hacking-fix
-    if (Platform.OS === 'ios') this.inputComentario.setNativeProps({ text: ' ' });
-    setTimeout(() => { this.inputComentario.setNativeProps({ text: '' }) }, 5)
   }
 
   render() {
@@ -145,20 +140,7 @@ export default class Post extends Component<Props> {
                   </View>
                 )}
 
-                <View style={styles.novoComentario}>
-                  <TextInput style={styles.input} 
-                    placeholder="Adicione um comentário..."
-                    ref={input => this.inputComentario = input}
-                    onChangeText={texto => this.setState({valorComentario: texto})}
-                    underlineColorAndroid="transparent"
-                  />
-
-                  <TouchableOpacity onPress={this.adicionaComentario.bind(this)}>
-                    <Image style={styles.icone} 
-                      source={require('../../resources/img/send.png')}
-                    />
-                  </TouchableOpacity>
-                </View>
+                <InputComentario comentarioCallback={this.adicionaComentario.bind(this)} />
             </View>
         </View>
     );
@@ -199,18 +181,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginRight: 5
   },
-  input: {
-    flex: 1,
-    height: 40
-  },
-  icone: {
-    width: 30,
-    height: 30
-  },
-  novoComentario: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd'
-  }
 });
