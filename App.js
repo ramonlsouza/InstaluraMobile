@@ -40,13 +40,43 @@ export default class App extends Component{
       .then(json => this.setState({fotos: json}))
   }
 
+  like(idFoto) {
+    const foto = this.state.fotos.find(foto => foto.id === idFoto)
+
+    let novaLista = []
+
+    if(!foto.likeada){
+      novaLista = [
+        ...foto.likers,
+        {login: 'trivialidades'}
+      ]
+    }else{
+      novaLista = foto.likers.filter( liker => {
+        return liker.login !== 'trivialidades'
+      });
+    }
+
+
+    const fotoAtualizada = {
+        //TODO: pesquisar sobre isso depois (spread syntax)
+        ...foto,
+        likeada: !foto.likeada,
+        likers: novaLista
+    }
+    const fotos = this.state.fotos
+      .map( foto => foto.id === fotoAtualizada.id ? fotoAtualizada : foto)
+
+    this.setState({fotos})
+  }
+
   render() {
     return (
       <FlatList style={styles.container}
         keyExtractor={item => item.id.toString()}
         data={this.state.fotos}
         renderItem={ ({item}) =>
-          <Post foto={item}/>
+          <Post foto={item}
+            likeCallback={this.like.bind(this)}/>
         }
       />
     );
