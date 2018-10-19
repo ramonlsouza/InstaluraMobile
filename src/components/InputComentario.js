@@ -27,7 +27,7 @@ export default class InputComentario extends Component{
             />
             
             <TouchableOpacity onPress={() => {
-                this.props.comentarioCallback(this.state.valorComentario, this.inputComentario);
+                this.props.comentarioCallback(this.props.idFoto, this.state.valorComentario, this.inputComentario);
                 this.setState({valorComentario: ''})
                 //bug com clear nessa versao do react native, hacking-fix
                 if (Platform.OS === 'ios') this.inputComentario.setNativeProps({ text: ' ' });

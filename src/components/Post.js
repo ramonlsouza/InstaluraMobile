@@ -36,28 +36,8 @@ export default class Post extends Component{
 
   }
 
-  adicionaComentario(valorComentario, inputComentario){
-    if(valorComentario === '')
-      return;
-
-    //cria uma copia local com base em objeto existente
-    const novaLista = [...this.state.foto.comentarios, {
-      id: valorComentario,
-      login: 'trivialidades',
-      texto: valorComentario
-    }];
-
-    const fotoAtualizada = {
-      ...this.state.foto,
-      comentarios: novaLista
-    }
-
-    this.setState({foto: fotoAtualizada})
-
-  }
-
   render() {
-    const { foto, likeCallback } = this.props;
+    const { foto, likeCallback, comentarioCallback } = this.props;
     
     return (
         <View>
@@ -79,7 +59,8 @@ export default class Post extends Component{
                   </View>
                 )}
 
-                <InputComentario comentarioCallback={this.adicionaComentario.bind(this)} />
+                <InputComentario idFoto={foto.id}
+                comentarioCallback={comentarioCallback} />
             </View>
         </View>
     );
