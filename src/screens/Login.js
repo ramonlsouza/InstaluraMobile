@@ -45,6 +45,17 @@ export default class Login extends Component{
             })
             .catch(e => this.setState({mensagem: e.message}))
     }
+    logout() {
+        AsyncStorage.removeItem('usuario');
+        AsyncStorage.removeItem('token');
+    
+        this.props.navigator.resetTo({
+            screen:{
+                screen: 'Login',
+                title: 'Login'
+            }
+        });
+    }    
     render(){
         return(
             <View style={styles.container}>
