@@ -7,6 +7,7 @@ import {
   View,
   Image, 
   Dimensions,
+  AsyncStorage,
 } from 'react-native';
 
 const width = Dimensions.get('screen').width;
@@ -31,7 +32,13 @@ export default class Login extends Component{
 
                 throw new Error("Não foi possível efetuar login.");
             })
-            .then(token => console.warn(token))
+            .then(token => {
+                AsyncStorage.setItem('token', token);
+                AsyncStorage.setItem('usuario', this.state.usuario);
+
+                return AsyncStorage.getItem('token');
+            })
+            .then(token => console.warn(token));
     }
     render(){
         return(
