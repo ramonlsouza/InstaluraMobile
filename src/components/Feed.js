@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
 import {
   Platform, 
@@ -18,11 +10,11 @@ import {
   FlatList
 } from 'react-native';
 
-import Post from './src/components/Post';
+import Post from './Post';
 
 const width = Dimensions.get('screen').width;
 
-export default class App extends Component{
+export default class Feed extends Component{
   //faz isso no inicio
   constructor() {
     super();
