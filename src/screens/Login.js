@@ -5,7 +5,6 @@ import {
   TextInput,
   Button,
   View,
-  Image, 
   Dimensions,
   AsyncStorage,
 } from 'react-native';
