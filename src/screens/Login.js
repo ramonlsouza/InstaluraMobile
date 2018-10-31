@@ -13,6 +13,14 @@ import {
 const width = Dimensions.get('screen').width;
 
 export default class Login extends Component{
+    constructor(){
+     super();
+     this.state = {
+         usuario: '',
+         senha: '',
+         mensagem: ''
+     }   
+    }
     efetuaLogin(){
         const uri = "https://instalura-api.herokuapp.com/api/public/login";
         const requestInfo = {
@@ -35,10 +43,8 @@ export default class Login extends Component{
             .then(token => {
                 AsyncStorage.setItem('token', token);
                 AsyncStorage.setItem('usuario', this.state.usuario);
-
-                return AsyncStorage.getItem('token');
             })
-            .then(token => console.warn(token));
+            .catch(e => this.setState({mensagem: e.message}))
     }
     render(){
         return(
@@ -60,6 +66,10 @@ export default class Login extends Component{
                         
                     <Button title="Login" onPress={this.efetuaLogin.bind(this)} />
                 </View>
+
+                <Text style={styles.mensagem}>
+                    {this.state.mensagem}
+                </Text>
             </View>
         );
     }
@@ -82,5 +92,9 @@ const styles = StyleSheet.create({
     titulo: { 
         fontWeight: 'bold',
         fontSize: 26,
+    },
+    mensagem: {
+        marginTop: 15,
+        color: '#e74c3c'
     }
 });
