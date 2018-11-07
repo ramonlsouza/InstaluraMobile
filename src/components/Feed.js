@@ -2,25 +2,22 @@ import React, {Component} from 'react';
 import {
   Platform, 
   StyleSheet, 
-  Text, 
-  View,
-  ScrollView,
-  Image, 
   Dimensions,
   FlatList
 } from 'react-native';
+import { Navigation } from 'react-native-navigation';
 
 import Post from './Post';
 
-const width = Dimensions.get('screen').width;
-
 export default class Feed extends Component{
   //faz isso no inicio
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    Navigation.events().bindComponent(this);
 
     this.state = {
-      fotos: []
+      fotos: [],
     }
   }
 
@@ -31,6 +28,7 @@ export default class Feed extends Component{
       .then(resposta => resposta.json())
       .then(json => this.setState({fotos: json}))
   }
+
 
   like(idFoto) {
     const foto = this.state.fotos.find(foto => foto.id === idFoto)

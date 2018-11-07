@@ -8,6 +8,7 @@ import {
   Dimensions,
   AsyncStorage,
 } from 'react-native';
+import { Navigation } from 'react-native-navigation';
 
 const width = Dimensions.get('screen').width;
 
@@ -42,6 +43,13 @@ export default class Login extends Component{
             .then(token => {
                 AsyncStorage.setItem('token', token);
                 AsyncStorage.setItem('usuario', this.state.usuario);
+
+                
+                Navigation.push(this.props.componentId, {
+                    component: {
+                      name: 'Feed',
+                    }
+                  });
             })
             .catch(e => this.setState({mensagem: e.message}))
     }

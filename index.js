@@ -1,8 +1,42 @@
-/** @format */
-
-import {AppRegistry} from 'react-native';
+import {Navigation} from 'react-native-navigation';
 import Feed from './src/components/Feed';
 import Login from './src/screens/Login';
-import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => Login);
+
+  /*
+  Navigation.startSingleScreenApp({
+    screen:{
+      screen: 'Login',
+      title: 'Login'
+    }
+  });
+*/
+Navigation.registerComponent('Login', () => Login);
+Navigation.registerComponent('Feed', () => Feed);
+
+Navigation.events().registerAppLaunchedListener(() => {
+    Navigation.setRoot({
+        root: {
+          stack: {
+            options: {
+              topBar: {
+                visible: false
+              }
+            },
+            children: [
+              {
+                component: {
+                  name: 'Feed',
+                }
+              },
+              {
+                component: {
+                  name: 'Login',
+                }
+              }
+            ]
+          }
+        }
+      });
+
+  });
