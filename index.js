@@ -18,20 +18,26 @@ Navigation.events().registerAppLaunchedListener(() => {
     Navigation.setRoot({
         root: {
           stack: {
-            options: {
-              topBar: {
-                visible: false
-              }
-            },
             children: [
               {
                 component: {
                   name: 'Feed',
+                  options: {
+                    topBar: {
+                      visible: true,
+                    }
+                  },
                 }
               },
               {
                 component: {
                   name: 'Login',
+                  options: {
+                    topBar: {
+                      visible: false,
+                    }
+                  },
+
                 }
               }
             ]
