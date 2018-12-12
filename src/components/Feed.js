@@ -95,23 +95,35 @@ export default class Feed extends Component{
 
     const foto = this.state.fotos.find(foto => foto.id === idFoto)
 
-    //cria uma copia local com base em objeto existente
-    const novaLista = [...foto.comentarios, {
-      id: valorComentario,
-      login: 'trivialidades',
-      texto: valorComentario
-    }];
+    const uri = 'https://instalura-api.herokuapp.com/api/fotos/'+idFoto+'/comment';
 
-    const fotoAtualizada = {
-      ...foto,
-      comentarios: novaLista
-    }
-
-    const fotos = this.state.fotos
-      .map(foto => foto.id === fotoAtualizada.id ? fotoAtualizada : foto)
-
-    this.setState({fotos})
-
+    AsyncStorage.getItem('token')
+    .then(token => {
+      return {
+        method: 'POST',
+        body: JSON.stringify({
+          texto: valorComentario
+        }),
+          headers: new Headers({
+          "Content-type": "application/json",
+          "X-AUTH-TOKEN": token
+        })
+      }
+    })
+    .then(requestInfo => fetch(uri,requestInfo))
+    .then(resposta => resposta.json())
+    .then(comentario => [...foto.comentarios, comentario])
+    .then(novaLista => {
+      const fotoAtualizada = {
+        ...foto,
+        comentarios: novaLista
+      }
+  
+      const fotos = this.state.fotos
+        .map(foto => foto.id === fotoAtualizada.id ? fotoAtualizada : foto)
+  
+      this.setState({fotos})
+    })
   }
 
 
