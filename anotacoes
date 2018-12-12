@@ -5,3 +5,5 @@ npm run start-iphone6
 rodar android: 
 cd ~/Library/Android/sdk/tools
 ./emulator -avd Nexus_5X_API_23
+
+login testes: rafael 123456

@@ -88,7 +88,7 @@ export default class Feed extends Component{
 
   render() {
     return (
-      <FlatList style={styles.container}
+      <FlatList
         keyExtractor={item => item.id.toString()}
         data={this.state.fotos}
         renderItem={ ({item}) =>
@@ -101,10 +101,3 @@ export default class Feed extends Component{
     );
   }
 }
-const margem = Platform.OS == 'ios' ? 20 : 0;
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: margem
-  },
-});

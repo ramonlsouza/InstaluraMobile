@@ -44,10 +44,12 @@ export default class Login extends Component{
                 AsyncStorage.setItem('token', token);
                 AsyncStorage.setItem('usuario', this.state.usuario);
 
-                
-                Navigation.push(this.props.componentId, {
+                Navigation.setStackRoot(this.props.componentId, {
                     component: {
                       name: 'Feed',
+                      passProps: {
+                        title: 'Instalura'
+                      },
                     }
                   });
             })
