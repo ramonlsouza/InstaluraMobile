@@ -3,7 +3,8 @@ import {
   Platform, 
   StyleSheet, 
   Dimensions,
-  FlatList
+  FlatList,
+  AsyncStorage
 } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 
@@ -23,10 +24,20 @@ export default class Feed extends Component{
 
   //se constructor deu certo, atualiza dados aqui
   componentDidMount() {
+    const uri = 'https://instalura-api.herokuapp.com/api/fotos';
+
+    AsyncStorage.getItem('token')
+    .then(token => {
+      return {
+        headers: new Headers({
+          "X-AUTH-TOKEN": token
+        })
+      }
+    })
     //busca fotos na api remota, faz parse do json e atualiza estado da variavel fotos
-    fetch('https://instalura-api.herokuapp.com/api/public/fotos/rafael')
-      .then(resposta => resposta.json())
-      .then(json => this.setState({fotos: json}))
+    .then(requestInfo => fetch(uri, requestInfo))
+    .then(resposta => resposta.json())
+    .then(json => this.setState({fotos: json}))
   }
 
 
