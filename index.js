@@ -14,6 +14,7 @@ import Login from './src/screens/Login';
 */
 Navigation.registerComponent('Login', () => Login);
 Navigation.registerComponent('Feed', () => Feed);
+Navigation.registerComponent('PerfilUsuario', () => Feed);
 
 AsyncStorage.getItem('token')
   .then(token => {
@@ -23,10 +24,12 @@ AsyncStorage.getItem('token')
             component: {
               name: 'Feed',
               options: {
-                topBar: {
-                  visible: true,
+                topBar:{
+                  title: {
+                    text: 'Instalura'
+                  }
                 }
-              },
+              }
             }
       };
     }

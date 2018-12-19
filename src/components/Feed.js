@@ -26,7 +26,12 @@ export default class Feed extends Component{
 
   //se constructor deu certo, atualiza dados aqui
   componentDidMount() {
-    InstaluraFetchService.get('/fotos')
+    let uri = "/fotos";
+
+    if(this.props.usuario)
+      uri = '/public/fotos/' + this.props.usuario;
+
+    InstaluraFetchService.get(uri)
     .then(json => this.setState({fotos: json}))
   }
 
@@ -96,6 +101,25 @@ export default class Feed extends Component{
     .catch(e => Notificacao.exibe('Ops...','Não foi possível adicionar comentário!'))
   }
 
+  verPerfilUsuario(idFoto){
+    const foto = this.state.fotos.find(foto => foto.id === idFoto)
+
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'PerfilUsuario',
+        options: {
+          topBar:{
+            title: {
+              text: foto.loginUsuario
+            }
+          }
+        },
+        passProps: {
+          usuario: foto.loginUsuario
+        }
+      }
+    });    
+  }
 
   render() {
     return (
@@ -106,6 +130,7 @@ export default class Feed extends Component{
           <Post foto={item}
             likeCallback={this.like.bind(this)}
             comentarioCallback={this.adicionaComentario.bind(this)}
+            verPerfilCallback={this.verPerfilUsuario.bind(this)}
           />
         }
       />
