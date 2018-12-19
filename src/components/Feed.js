@@ -9,6 +9,7 @@ import {
 import { Navigation } from 'react-native-navigation';
 
 import Post from './Post';
+import InstaluraFetchService from '../services/InstaluraFetchService';
 
 export default class Feed extends Component{
   //faz isso no inicio
@@ -24,19 +25,7 @@ export default class Feed extends Component{
 
   //se constructor deu certo, atualiza dados aqui
   componentDidMount() {
-    const uri = 'https://instalura-api.herokuapp.com/api/fotos';
-
-    AsyncStorage.getItem('token')
-    .then(token => {
-      return {
-        headers: new Headers({
-          "X-AUTH-TOKEN": token
-        })
-      }
-    })
-    //busca fotos na api remota, faz parse do json e atualiza estado da variavel fotos
-    .then(requestInfo => fetch(uri, requestInfo))
-    .then(resposta => resposta.json())
+    InstaluraFetchService.get('/fotos')
     .then(json => this.setState({fotos: json}))
   }
 
