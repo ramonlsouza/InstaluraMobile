@@ -10,7 +10,8 @@ import { Navigation } from 'react-native-navigation';
 
 import Post from './Post';
 import InstaluraFetchService from '../services/InstaluraFetchService';
-
+import Notificacao from '../api/Notificacao';
+ 
 export default class Feed extends Component{
   //faz isso no inicio
   constructor(props) {
@@ -31,6 +32,7 @@ export default class Feed extends Component{
 
 
   like(idFoto) {
+    const listaOriginal = this.state.fotos;
     const foto = this.state.fotos.find(foto => foto.id === idFoto)
 
     AsyncStorage.getItem('usuario')
@@ -64,6 +66,10 @@ export default class Feed extends Component{
     })
 
     InstaluraFetchService.post('/fotos/'+idFoto+'/like')
+      .catch(e => {
+        this.setState({fotos: listaOriginal});
+        Notificacao.exibe('Ops...','Algo deu errado!')
+      });
   }
 
 
@@ -87,6 +93,7 @@ export default class Feed extends Component{
   
       this.setState({fotos})
     })
+    .catch(e => Notificacao.exibe('Ops...','Não foi possível adicionar comentário!'))
   }
 
 
