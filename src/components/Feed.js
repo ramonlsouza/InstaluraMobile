@@ -27,6 +27,7 @@ export default class Feed extends Component{
     }
   }
 
+
   //se constructor deu certo, atualiza dados aqui
   componentDidMount() {
     this.load();
