@@ -29,6 +29,15 @@ export default class Feed extends Component{
 
   //se constructor deu certo, atualiza dados aqui
   componentDidMount() {
+    this.load();
+  }
+
+  //quando voltar pagina de perfil para feed, ativa esse evento
+  componentDidAppear() {
+    this.load();
+  }
+
+  load(){
     let uri = "/fotos";
 
     if(this.props.usuario)
