@@ -4,11 +4,14 @@ import {
   StyleSheet, 
   Dimensions,
   FlatList,
+  ScrollView,
   AsyncStorage
 } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 
 import Post from './Post';
+import HeaderUsuario from './HeaderUsuario';
+
 import InstaluraFetchService from '../services/InstaluraFetchService';
 import Notificacao from '../api/Notificacao';
  
@@ -115,25 +118,36 @@ export default class Feed extends Component{
           }
         },
         passProps: {
-          usuario: foto.loginUsuario
+          usuario: foto.loginUsuario,
+          fotoDePerfil: foto.urlPerfil,
         }
       }
     });    
   }
 
+  exibeHeader(){
+    if(this.props.usuario){
+      //passando todas as propriedades
+      return <HeaderUsuario {...this.props} posts={this.state.fotos.length}/>
+    }
+  }
+
   render() {
     return (
-      <FlatList
-        keyExtractor={item => item.id.toString()}
-        data={this.state.fotos}
-        renderItem={ ({item}) =>
-          <Post foto={item}
-            likeCallback={this.like.bind(this)}
-            comentarioCallback={this.adicionaComentario.bind(this)}
-            verPerfilCallback={this.verPerfilUsuario.bind(this)}
-          />
-        }
-      />
+      <ScrollView>
+        {this.exibeHeader()}
+        <FlatList
+          keyExtractor={item => item.id.toString()}
+          data={this.state.fotos}
+          renderItem={ ({item}) =>
+            <Post foto={item}
+              likeCallback={this.like.bind(this)}
+              comentarioCallback={this.adicionaComentario.bind(this)}
+              verPerfilCallback={this.verPerfilUsuario.bind(this)}
+            />
+          }
+        />
+      </ScrollView>
     );
   }
 }
